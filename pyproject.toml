@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "e2e-real-time-data-streaming"
+version = "0.1.0"
+description = ""
+authors = ["Salman Zaidi <salman.zaidi@torc.ai>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11, <3.13"
+apache-airflow = "^2.10.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

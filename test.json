@@ -1,0 +1,56 @@
+{
+  "gender": "female",
+  "name": {
+    "title": "Miss",
+    "first": "Nevena",
+    "last": "Borjan"
+  },
+  "location": {
+    "street": {
+      "number": 1376,
+      "name": "Novaka Novaka "
+    },
+    "city": "Aran\u0111elovac",
+    "state": "Ma\u010dva",
+    "country": "Serbia",
+    "postcode": 69894,
+    "coordinates": {
+      "latitude": "55.9294",
+      "longitude": "26.0730"
+    },
+    "timezone": {
+      "offset": "+10:00",
+      "description": "Eastern Australia, Guam, Vladivostok"
+    }
+  },
+  "email": "nevena.borjan@example.com",
+  "login": {
+    "uuid": "a14f2904-ab23-4c41-9da8-0c703eb38af5",
+    "username": "orangebird828",
+    "password": "native",
+    "salt": "SjnXtgK1",
+    "md5": "643caec696713ee8ecb60eb9833ac508",
+    "sha1": "1e5ce9e6c80b22353032c90e50f9ba74d1ab446f",
+    "sha256": "a5a08b403a3c5e3f8f7eaab206b367055eb0ab3d7f44b273f66ca2a996c1ffad"
+  },
+  "dob": {
+    "date": "1969-08-16T18:14:34.540Z",
+    "age": 55
+  },
+  "registered": {
+    "date": "2003-03-29T05:27:07.156Z",
+    "age": 21
+  },
+  "phone": "036-1569-304",
+  "cell": "063-6739-570",
+  "id": {
+    "name": "SID",
+    "value": "900299844"
+  },
+  "picture": {
+    "large": "https://randomuser.me/api/portraits/women/19.jpg",
+    "medium": "https://randomuser.me/api/portraits/med/women/19.jpg",
+    "thumbnail": "https://randomuser.me/api/portraits/thumb/women/19.jpg"
+  },
+  "nat": "RS"
+}
