@@ -1,12 +1,21 @@
-from airflow.decorators import dag, task
-from pendulum import datetime
 import uuid
+from datetime import datetime
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+
+default_args = {
+    'owner': 'airscholar',
+    'start_date': datetime(2023, 9, 3, 10, 00)
+}
 
 def get_data():
     import requests
-    import json
-    res = requests.get('https://randomuser.me/api').json()
-    return res["results"][0]
+
+    res = requests.get("https://randomuser.me/api/")
+    res = res.json()
+    res = res['results'][0]
+
+    return res
 
 def format_data(res):
     data = {}
@@ -24,29 +33,36 @@ def format_data(res):
     data['registered_date'] = res['registered']['date']
     data['phone'] = res['phone']
     data['picture'] = res['picture']['medium']
-    return data    
 
-print(format_data(get_data()))
+    return data
 
-# @dag(
-#     dag_id="real_time_streaming",
-#     description="This project demonstrate data engineering real time streaming using kafka and spark",
-#     schedule="@daily",
-#     doc_md=__doc__,
-#     default_args={"owner": "Salman Zaidi", "retries": 3},
-#     start_date=datetime(2024,12,17),
-#     catchup=False,
-#     tags=["real time data streaming", "kafka", "spark"],
-#     max_consecutive_failed_dag_runs=3
-# )
-    
-# def real_time_data_streaming():
-#     @task
-#     def stream_data():
-#         _stream_data()
-#     stream_data()
+def stream_data():
+    import json
+    from kafka import KafkaProducer
+    import time
+    import logging
 
-# real_time_data_streaming()
-            
-        
-        
+    producer = KafkaProducer(bootstrap_servers=['broker:29092'], max_block_ms=5000)
+    curr_time = time.time()
+
+    while True:
+        if time.time() > curr_time + 60: #1 minute
+            break
+        try:
+            res = get_data()
+            res = format_data(res)
+
+            producer.send('users_created', json.dumps(res).encode('utf-8'))
+        except Exception as e:
+            logging.error(f'An error occured: {e}')
+            continue
+
+with DAG('user_automation',
+         default_args=default_args,
+         schedule_interval='@daily',
+         catchup=False) as dag:
+
+    streaming_task = PythonOperator(
+        task_id='stream_data_from_api',
+        python_callable=stream_data
+    )
